@@ -5,19 +5,46 @@ metadata:
   namespace: argocd
 data:
   policy.default: role:readonly
+
   policy.csv: |
-    # -------- DEV ROLE --------
-    p, role:dev, applications, *, project-a-dev/*, allow
-    p, role:dev, applications, *, project-a-staging/*, allow
-    p, role:dev, applications, get, project-a-prod/*, allow
+    #################################
+    # DEV ROLE (Safe by default)
+    #################################
+
+    # ---- Dev + Staging (FULL app actions) ----
+    p, role:dev, applications, *, project-a-dev-*, allow
+    p, role:dev, applications, *, project-a-staging-*, allow
+    p, role:dev, applications, *, project-b-dev-*, allow
+    p, role:dev, applications, *, project-b-staging-*, allow
+
+    # ---- Prod (READ-ONLY) ----
+    p, role:dev, applications, get, project-a-prod-*, allow
+    p, role:dev, applications, list, project-a-prod-*, allow
+    p, role:dev, applications, watch, project-a-prod-*, allow
+
+    p, role:dev, applications, get, project-b-prod-*, allow
+    p, role:dev, applications, list, project-b-prod-*, allow
+    p, role:dev, applications, watch, project-b-prod-*, allow
+
+    # ---- Explicitly BLOCK disruptive actions at project/appset level ----
     p, role:dev, projects, *, *, deny
     p, role:dev, applicationsets, *, *, deny
+    p, role:dev, clusters, *, *, deny
+    p, role:dev, repositories, *, *, deny
 
-    # -------- SRE ROLE --------
+    #################################
+    # SRE ROLE (Full Control)
+    #################################
+
     p, role:sre, applications, *, */*, allow
     p, role:sre, projects, *, *, allow
     p, role:sre, applicationsets, *, *, allow
+    p, role:sre, clusters, *, *, allow
+    p, role:sre, repositories, *, *, allow
 
-    # -------- GROUP MAPPING --------
+    #################################
+    # GROUP MAPPING
+    #################################
+
     g, dev-group, role:dev
     g, sre-group, role:sre
