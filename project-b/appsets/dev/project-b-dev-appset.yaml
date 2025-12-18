@@ -19,7 +19,7 @@ spec:
       project: project-b
       source:
         repoURL: https://github.com/mellachervudharani07-ops/argocdRbac
-        targetRevision: master
+        targetRevision: main
         path: project-b/apps/{{app}}
       destination:
         server: https://kubernetes.default.svc
