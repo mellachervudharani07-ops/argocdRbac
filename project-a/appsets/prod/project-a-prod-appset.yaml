@@ -25,6 +25,6 @@ spec:
         server: https://kubernetes.default.svc
         namespace: prod
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+        automated: false
+        prune: true
+        selfHeal: false
