@@ -12,6 +12,9 @@ spec:
   template:
     metadata:
       name: project-b-staging-{{app}}
+      labels:
+        env: staging
+        project: project-b
     spec:
       project: project-b
       source:
