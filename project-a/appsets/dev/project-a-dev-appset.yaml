@@ -12,6 +12,9 @@ spec:
   template:
     metadata:
       name: project-a-dev-{{app}}
+      labels:
+        env: dev
+        project: project-a
     spec:
       project: project-a
       source:
