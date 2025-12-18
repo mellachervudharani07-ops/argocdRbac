@@ -46,5 +46,12 @@ data:
     # GROUP MAPPING
     #################################
 
-    g, dev-group, role:dev
-    g, sre-group, role:sre
+    # DEV users
+    g, dev1, role:dev
+    g, dev2, role:dev
+    g, dev3, role:dev
+
+    # SRE users
+    g, sre1, role:sre
+    g, sre2, role:sre
+    g, sre3, role:sre
