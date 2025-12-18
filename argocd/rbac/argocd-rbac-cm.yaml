@@ -4,5 +4,20 @@ metadata:
   name: argocd-rbac-cm
   namespace: argocd
 data:
+  policy.default: role:readonly
   policy.csv: |
-    g, alice, role:admin
+    # -------- DEV ROLE --------
+    p, role:dev, applications, *, project-a-dev/*, allow
+    p, role:dev, applications, *, project-a-staging/*, allow
+    p, role:dev, applications, get, project-a-prod/*, allow
+    p, role:dev, projects, *, *, deny
+    p, role:dev, applicationsets, *, *, deny
+
+    # -------- SRE ROLE --------
+    p, role:sre, applications, *, */*, allow
+    p, role:sre, projects, *, *, allow
+    p, role:sre, applicationsets, *, *, allow
+
+    # -------- GROUP MAPPING --------
+    g, dev-group, role:dev
+    g, sre-group, role:sre

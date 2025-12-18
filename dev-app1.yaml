@@ -1,18 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-bootstrap
+  name: dev-app1
   namespace: argocd
 spec:
-  project: default
+  project: project-a
   source:
     repoURL: https://github.com/mellachervudharani07-ops/argocdRbac
-    targetRevision: master
-    path: .
+    targetRevision: HEAD
+    path: project-a/apps/app1
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    namespace: dev
