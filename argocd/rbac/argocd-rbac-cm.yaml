@@ -8,50 +8,65 @@ data:
 
   policy.csv: |
     #################################
-    # DEV ROLE (Safe by default)
+    # DEV – PROJECT A
     #################################
 
-    # ---- Dev + Staging (FULL app actions) ----
-    p, role:dev, applications, *, project-a-dev-*, allow
-    p, role:dev, applications, *, project-a-staging-*, allow
-    p, role:dev, applications, *, project-b-dev-*, allow
-    p, role:dev, applications, *, project-b-staging-*, allow
+    # Dev + Staging (FULL)
+    p, role:dev-a, applications, *, project-a-dev-*, allow
+    p, role:dev-a, applications, *, project-a-staging-*, allow
 
-    # ---- Prod (READ-ONLY) ----
-    p, role:dev, applications, get, project-a-prod-*, allow
-    p, role:dev, applications, list, project-a-prod-*, allow
-    p, role:dev, applications, watch, project-a-prod-*, allow
+    # Prod (READ ONLY)
+    p, role:dev-a, applications, get, project-a-prod-*, allow
+    p, role:dev-a, applications, list, project-a-prod-*, allow
+    p, role:dev-a, applications, watch, project-a-prod-*, allow
 
-    p, role:dev, applications, get, project-b-prod-*, allow
-    p, role:dev, applications, list, project-b-prod-*, allow
-    p, role:dev, applications, watch, project-b-prod-*, allow
-
-    # ---- Explicitly BLOCK disruptive actions at project/appset level ----
-    p, role:dev, projects, *, *, deny
-    p, role:dev, applicationsets, *, *, deny
-    p, role:dev, clusters, *, *, deny
-    p, role:dev, repositories, *, *, deny
+    # Explicit DENY
+    p, role:dev-a, applications, sync, project-a-prod-*, deny
+    p, role:dev-a, applications, delete, project-a-*, deny
+    p, role:dev-a, applicationsets, *, *, deny
+    p, role:dev-a, projects, *, *, deny
+    p, role:dev-a, clusters, *, *, deny
+    p, role:dev-a, repositories, *, *, deny
 
     #################################
-    # SRE ROLE (Full Control)
+    # SRE – PROJECT A
     #################################
 
-    p, role:sre, applications, *, */*, allow
-    p, role:sre, projects, *, *, allow
-    p, role:sre, applicationsets, *, *, allow
-    p, role:sre, clusters, *, *, allow
-    p, role:sre, repositories, *, *, allow
+    p, role:sre-a, applications, *, project-a-*, allow
+    p, role:sre-a, applicationsets, *, project-a-*, allow
+    p, role:sre-a, projects, get, project-a, allow
 
     #################################
-    # GROUP MAPPING
+    # DEV – PROJECT B
     #################################
 
-    # DEV users
-    g, dev1, role:dev
-    g, dev2, role:dev
-    g, dev3, role:dev
+    p, role:dev-b, applications, *, project-b-dev-*, allow
+    p, role:dev-b, applications, *, project-b-staging-*, allow
 
-    # SRE users
-    g, sre1, role:sre
-    g, sre2, role:sre
-    g, sre3, role:sre
+    p, role:dev-b, applications, get, project-b-prod-*, allow
+    p, role:dev-b, applications, list, project-b-prod-*, allow
+    p, role:dev-b, applications, watch, project-b-prod-*, allow
+
+    p, role:dev-b, applications, sync, project-b-prod-*, deny
+    p, role:dev-b, applications, delete, project-b-*, deny
+    p, role:dev-b, applicationsets, *, *, deny
+    p, role:dev-b, projects, *, *, deny
+    p, role:dev-b, clusters, *, *, deny
+    p, role:dev-b, repositories, *, *, deny
+
+    #################################
+    # SRE – PROJECT B
+    #################################
+
+    p, role:sre-b, applications, *, project-b-*, allow
+    p, role:sre-b, applicationsets, *, project-b-*, allow
+    p, role:sre-b, projects, get, project-b, allow
+
+    #################################
+    # USER → ROLE MAPPING
+    #################################
+
+    g, dev-a, role:dev-a
+    g, sre-a, role:sre-a
+    g, dev-b, role:dev-b
+    g, sre-b, role:sre-b
