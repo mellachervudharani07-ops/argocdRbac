@@ -4,6 +4,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
+  url: https://localhost:8080
   accounts.dev-a: login
   accounts.sre-a: login
   accounts.dev-b: login
