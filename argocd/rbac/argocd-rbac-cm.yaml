@@ -4,13 +4,12 @@ metadata:
   name: argocd-rbac-cm
   namespace: argocd
 data:
-  policy.default: role:readonly
-
   policy.csv: |
+
     #################################
     # DEV – PROJECT A
     #################################
-    # Read-only everywhere in project-a
+    # Read-only visibility inside project-a
     p, role:dev-a, applications, get, project-a/*, allow
     p, role:dev-a, applications, list, project-a/*, allow
     p, role:dev-a, applications, watch, project-a/*, allow
