@@ -4,41 +4,46 @@ metadata:
   name: argocd-rbac-cm
   namespace: argocd
 data:
-  policy.csv: |
+  policy.default: role:readonly
 
+  policy.csv: |
     #################################
     # DEV – PROJECT A
     #################################
-    p, role:dev-a, applications, get, project-a-*, allow
-    p, role:dev-a, applications, list, project-a-*, allow
-    p, role:dev-a, applications, watch, project-a-*, allow
-    p, role:dev-a, applications, sync, project-a-dev-*, allow
-    p, role:dev-a, applications, sync, project-a-staging-*, allow
-    p, role:dev-a, applications, override, project-a-dev-*, allow
-    p, role:dev-a, applications, override, project-a-staging-*, allow
+    # Read-only everywhere in project-a
+    p, role:dev-a, applications, get, project-a/*, allow
+    p, role:dev-a, applications, list, project-a/*, allow
+    p, role:dev-a, applications, watch, project-a/*, allow
+
+    # Write access ONLY to dev + staging
+    p, role:dev-a, applications, sync, project-a/project-a-dev-*, allow
+    p, role:dev-a, applications, sync, project-a/project-a-staging-*, allow
+    p, role:dev-a, applications, override, project-a/project-a-dev-*, allow
+    p, role:dev-a, applications, override, project-a/project-a-staging-*, allow
 
     #################################
     # SRE – PROJECT A
     #################################
-    p, role:sre-a, applications, *, project-a-*, allow
-    p, role:sre-a, projects, get, project-a, allow
+    p, role:sre-a, applications, *, project-a/*, allow
+    p, role:sre-a, projects, *, project-a, allow
 
     #################################
     # DEV – PROJECT B
     #################################
-    p, role:dev-b, applications, get, project-b-*, allow
-    p, role:dev-b, applications, list, project-b-*, allow
-    p, role:dev-b, applications, watch, project-b-*, allow
-    p, role:dev-b, applications, sync, project-b-dev-*, allow
-    p, role:dev-b, applications, sync, project-b-staging-*, allow
-    p, role:dev-b, applications, override, project-b-dev-*, allow
-    p, role:dev-b, applications, override, project-b-staging-*, allow
+    p, role:dev-b, applications, get, project-b/*, allow
+    p, role:dev-b, applications, list, project-b/*, allow
+    p, role:dev-b, applications, watch, project-b/*, allow
+
+    p, role:dev-b, applications, sync, project-b/project-b-dev-*, allow
+    p, role:dev-b, applications, sync, project-b/project-b-staging-*, allow
+    p, role:dev-b, applications, override, project-b/project-b-dev-*, allow
+    p, role:dev-b, applications, override, project-b/project-b-staging-*, allow
 
     #################################
     # SRE – PROJECT B
     #################################
-    p, role:sre-b, applications, *, project-b-*, allow
-    p, role:sre-b, projects, get, project-b, allow
+    p, role:sre-b, applications, *, project-b/*, allow
+    p, role:sre-b, projects, *, project-b, allow
 
     #################################
     # USER → ROLE MAPPING
