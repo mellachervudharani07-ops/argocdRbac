@@ -10,62 +10,40 @@ data:
     #################################
     # DEV – PROJECT A
     #################################
-
-    # Dev + Staging (FULL)
-    p, role:dev-a, applications, *, project-a-dev-*, allow
-    p, role:dev-a, applications, *, project-a-staging-*, allow
-
-    # Prod (READ ONLY)
-    p, role:dev-a, applications, get, project-a-prod-*, allow
-    p, role:dev-a, applications, list, project-a-prod-*, allow
-    p, role:dev-a, applications, watch, project-a-prod-*, allow
-
-    # Explicit DENY
-    p, role:dev-a, applications, sync, project-a-prod-*, deny
-    p, role:dev-a, applications, delete, project-a-*, deny
-    p, role:dev-a, applicationsets, *, *, deny
-    p, role:dev-a, projects, *, *, deny
-    p, role:dev-a, clusters, *, *, deny
-    p, role:dev-a, repositories, *, *, deny
+    p, role:dev-a, applications, get, project-a-*, allow
+    p, role:dev-a, applications, list, project-a-*, allow
+    p, role:dev-a, applications, watch, project-a-*, allow
+    p, role:dev-a, applications, sync, project-a-dev-*, allow
+    p, role:dev-a, applications, sync, project-a-staging-*, allow
+    p, role:dev-a, applications, override, project-a-dev-*, allow
+    p, role:dev-a, applications, override, project-a-staging-*, allow
 
     #################################
     # SRE – PROJECT A
     #################################
-
     p, role:sre-a, applications, *, project-a-*, allow
-    p, role:sre-a, applicationsets, *, project-a-*, allow
     p, role:sre-a, projects, get, project-a, allow
 
     #################################
     # DEV – PROJECT B
     #################################
-
-    p, role:dev-b, applications, *, project-b-dev-*, allow
-    p, role:dev-b, applications, *, project-b-staging-*, allow
-
-    p, role:dev-b, applications, get, project-b-prod-*, allow
-    p, role:dev-b, applications, list, project-b-prod-*, allow
-    p, role:dev-b, applications, watch, project-b-prod-*, allow
-
-    p, role:dev-b, applications, sync, project-b-prod-*, deny
-    p, role:dev-b, applications, delete, project-b-*, deny
-    p, role:dev-b, applicationsets, *, *, deny
-    p, role:dev-b, projects, *, *, deny
-    p, role:dev-b, clusters, *, *, deny
-    p, role:dev-b, repositories, *, *, deny
+    p, role:dev-b, applications, get, project-b-*, allow
+    p, role:dev-b, applications, list, project-b-*, allow
+    p, role:dev-b, applications, watch, project-b-*, allow
+    p, role:dev-b, applications, sync, project-b-dev-*, allow
+    p, role:dev-b, applications, sync, project-b-staging-*, allow
+    p, role:dev-b, applications, override, project-b-dev-*, allow
+    p, role:dev-b, applications, override, project-b-staging-*, allow
 
     #################################
     # SRE – PROJECT B
     #################################
-
     p, role:sre-b, applications, *, project-b-*, allow
-    p, role:sre-b, applicationsets, *, project-b-*, allow
     p, role:sre-b, projects, get, project-b, allow
 
     #################################
     # USER → ROLE MAPPING
     #################################
-
     g, dev-a, role:dev-a
     g, sre-a, role:sre-a
     g, dev-b, role:dev-b
